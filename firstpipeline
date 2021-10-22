@@ -1,19 +1,25 @@
 pipeline {
     agent any 
     stages {
-        stage('Build') { 
+        stage('compile stage') { 
             steps {
-                echo "this is build stage from github"
+             withMaven(maven : 'maven'){
+                sh 'mvn clean compile'
+                }
             }
         }
-        stage('Test') { 
+        stage('Testing stage') { 
             steps {
-                 echo "this is test stage from github"
+                 withMaven(maven : 'maven'){
+                sh 'mvn test'
+                }
             }
         }
-        stage('Deploy') { 
+        stage('Deploy stage') { 
             steps {
-               echo "this is depoy stage from github"
+              withMaven(maven : 'maven'){
+                sh 'mvn install'
+                }
             }
         }
     }
